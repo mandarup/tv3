@@ -52,19 +52,19 @@ This module provides a simple brute force full text search implementation.
 Other modules could provide better search functions that could be plugged in.
 
 """
+
 import logging
 logger = logging.getLogger(__name__)
-import os
-import sys
 
 import chardet
+import os
+import sys
 
 
 def unicode_or_bust(raw_text):
     """Return the given raw text data decoded to unicode.
 
     If the text cannot be decoded, return None.
-
     """
     encodings = ["utf-8"]
     for encoding in (sys.getfilesystemencoding(), sys.getdefaultencoding()):
@@ -85,8 +85,8 @@ def unicode_or_bust(raw_text):
     if encoding and encoding not in encodings:
         try:
             decoded = unicode(raw_text, encoding=encoding)
-            logger.debug("File decoded with chardet, encoding was {0}".format(
-                encoding))
+            logger.debug(
+                "File decoded with chardet, encoding was {0}".format(encoding))
             return decoded
         except UnicodeDecodeError:
             pass
@@ -111,9 +111,8 @@ class Error(Exception):
 
 
 class NewNoteBookError(Error):
-    """Exception raised if initialising a new NoteBook fails.
+    """Raised when initialising a new NoteBook fails."""
 
-    """
     def __init__(self, value):
         self.value = value
 
@@ -122,9 +121,8 @@ class NewNoteBookError(Error):
 
 
 class NewNoteError(Error):
-    """Exception raised if making a new Note or adding it to a NoteBook fails.
+    """Raised when making a new Note or adding it to a Notebook fails."""
 
-    """
     def __init__(self, value):
         self.value = value
 
@@ -133,23 +131,18 @@ class NewNoteError(Error):
 
 
 class NoteAlreadyExistsError(NewNoteError):
-    """Exception raised when trying to add a new note that already exists.
-
-    """
+    """Raised when trying to add a new note that already exists."""
     pass
 
 
 class InvalidNoteTitleError(NewNoteError):
-    """Exception raised when trying to add a new note with an invalid title.
-
-    """
+    """Raised when trying to add a new note with an invalid title."""
     pass
 
 
 class DelNoteError(Error):
-    """Exception raised if removing a Note from a NoteBook fails.
+    """Raised when removing a Note from a NoteBook fails."""
 
-    """
     def __init__(self, value):
         self.value = value
 
@@ -180,7 +173,6 @@ class PlainTextNote(object):
         notebook -- the PlainTextNoteBook this PlainTextNote will belong to
         extension -- the filename extension to use (string, should start with
             a dot e.g. ".txt")
-
         """
         self._title = title
         self._notebook = notebook
@@ -196,8 +188,8 @@ class PlainTextNote(object):
             try:
                 os.makedirs(directory)
             except os.error as e:
-                raise NewNoteError(
-                        u"{0} could not be created: {1}".format(directory, e))
+                raise NewNoteError(u"{0} could not be created: {1}".format(
+                    directory, e))
 
         # Create an empty file if the file doesn't exist.
         open(self.abspath, 'a')
@@ -219,8 +211,8 @@ class PlainTextNote(object):
     def contents(self):
         contents = unicode_or_bust(open(self.abspath, "r").read())
         if contents is None:
-            logger.error(
-                u"Could not decode file contents: {0}".format(self.abspath))
+            logger.error(u"Could not decode file contents: {0}".format(
+                self.abspath))
             return u""
         else:
             return contents
@@ -254,7 +246,6 @@ def brute_force_search(notebook, query):
 
     This implementation does a brute force search that simply reads every file
     in the notebook looking for the search words.
-
     """
     search_words = query.strip().split()
     matching_notes = []
@@ -279,8 +270,12 @@ def brute_force_search(notebook, query):
 class PlainTextNoteBook(object):
     """A NoteBook that stores its notes as a directory of plain text files."""
 
-    def __init__(self, path, extension, extensions,
-            search_function=brute_force_search, exclude=None):
+    def __init__(self,
+                 path,
+                 extension,
+                 extensions,
+                 search_function=brute_force_search,
+                 exclude=None):
         """Make a new PlainTextNoteBook for the given path.
 
         If `path` does not exist it will be created (parent directories too).
@@ -302,7 +297,6 @@ class PlainTextNoteBook(object):
             (list of strings)
 
         search_function -- the function to call to search the notebook
-
         """
         # Expand ~ in path, and transform it into an absolute path.
         self._path = os.path.abspath(os.path.expanduser(path))
@@ -326,8 +320,8 @@ class PlainTextNoteBook(object):
             try:
                 os.makedirs(self.path)
             except os.error as e:
-                raise NewNoteBookError(
-                        u"{0} could not be created: {1}".format(self.path, e))
+                raise NewNoteBookError(u"{0} could not be created: {1}".format(
+                    self.path, e))
         else:
             # TODO: Check that self.path is a directory, if not raise.
             pass
@@ -362,7 +356,7 @@ class PlainTextNoteBook(object):
                 if relpath is None:
                     # The filename could not be decoded.
                     logger.error(
-                            "Could not decode filename: {0}".format(relpath))
+                        "Could not decode filename: {0}".format(relpath))
                 else:
                     self.add_new(title=unicode_relpath, extension=ext)
 
@@ -375,7 +369,6 @@ class PlainTextNoteBook(object):
 
         Arguments:
         query -- the search query match notes against (string)
-
         """
         return self.search_function(self, query)
 
@@ -397,7 +390,6 @@ class PlainTextNoteBook(object):
         title -- the title for the new note (string)
         extension -- the filename extension for the new note (string, should
             start with a dot e.g. ".txt")
-
         """
         if extension is None:
             extension = self.extension
@@ -411,14 +403,14 @@ class PlainTextNoteBook(object):
         if not os.path.split(title)[1]:
             # Don't create notes with empty filenames.
             raise InvalidNoteTitleError(
-                    "Invalid note title: {0}".format(title))
+                "Invalid note title: {0}".format(title))
 
         # Check that we don't already have a note with the same title and
         # extension.
         for note in self._notes:
             if note.title == title and note.extension == extension:
                 raise NoteAlreadyExistsError(
-                        u"Note already in NoteBook: {0}".format(note.title))
+                    u"Note already in NoteBook: {0}".format(note.title))
 
         # Ok, add the note.
         note = PlainTextNote(title, self, extension)
