@@ -318,6 +318,11 @@ class MainFrame(urwid.Frame):
             elif self.search_box.edit_text:
                 self.search_box.set_edit_text("")
                 return None
+            else:
+                self.quit()
+
+        elif key in ["ctrl q"]:
+            self.quit()
 
         elif key in ["enter"]:
             if self.selected_note:
