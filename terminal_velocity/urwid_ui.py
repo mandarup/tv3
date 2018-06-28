@@ -121,16 +121,20 @@ class AutocompleteWidget(urwid.Edit):
             # If the typed text is a substring of the focused note's title,
             # then show the typed text followed by the rest of the focused
             # note's title in a different colour.
-            text_to_show = self.edit_text + self.autocomplete_text[len(
-                self.edit_text):]
-            attrs = [("search", len(self.edit_text)),
-                     ("autocomplete", len(text_to_show) - len(self.edit_text))]
+            text_to_show = self.edit_text
+            text_to_show += self.autocomplete_text[len(self.edit_text):]
+            attrs = [
+                ("search", len(self.edit_text)),
+                ("autocomplete", len(text_to_show) - len(self.edit_text)),
+            ]
             return (text_to_show, attrs)
         else:
             # If the typed text is not a prefix of the focused note's title,
             # just show the focused note's title in the search bar.
-            return (self.autocomplete_text, [('autocomplete',
-                                              len(self.autocomplete_text))])
+            return (
+                self.autocomplete_text,
+                [('autocomplete', len(self.autocomplete_text))],
+            )
 
     def consume(self):
         """Consume the autocomplete text, turning it into typed text."""
