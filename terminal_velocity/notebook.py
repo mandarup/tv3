@@ -25,8 +25,8 @@ def unicode_or_bust(raw_text):
     if encoding and encoding not in encodings:
         try:
             decoded = unicode(raw_text, encoding=encoding)
-            logger.debug(
-                'File decoded with chardet, encoding was {}'.format(encoding))
+            message = 'File decoded with chardet, encoding was {}'
+            logger.debug(message.format(encoding))
             return decoded
         except UnicodeDecodeError:
             pass
@@ -98,12 +98,13 @@ class PlainTextNote(object):
         self._abspath = os.path.join(self._notebook.path, self._filename)
         directory = os.path.split(self.abspath)[0]
         if not os.path.isdir(directory):
-            logger.debug(u'\'{} doesn\'t exist, creating it'.format(directory))
+            message = u'\'{} doesn\'t exist, creating it'
+            logger.debug(message.format(directory))
             try:
                 os.makedirs(directory)
             except os.error as e:
-                raise NewNoteError(u'{} could not be created: {}'.format(
-                    directory, e))
+                message = u'{} could not be created: {}'
+                raise NewNoteError(message.format(directory, e))
         open(self.abspath, 'a')
 
     @property
@@ -122,8 +123,8 @@ class PlainTextNote(object):
     def contents(self):
         contents = unicode_or_bust(open(self.abspath, 'r').read())
         if contents is None:
-            logger.error(u'Could not decode file contents: {}'.format(
-                self.abspath))
+            message = u'Could not decode file contents: {}'
+            logger.error(message.format(self.abspath))
             return u''
         else:
             return contents
@@ -184,12 +185,13 @@ class PlainTextNoteBook(object):
                 extension = '.' + extension
             self.extensions.append(extension)
         if not os.path.isdir(self.path):
-            logger.debug(u'{} doesn\'t exist, creating it'.format(self.path))
+            message = u'{} doesn\'t exist, creating it'
+            logger.debug(message.format(self.path))
             try:
                 os.makedirs(self.path)
             except os.error as e:
-                raise NewNoteBookError(u'{} could not be created: {}'.format(
-                    self.path, e))
+                message = u'{} could not be created: {}'
+                raise NewNoteBookError(message.format(self.path, e))
         self._notes = []
         for root, dirs, files in os.walk(self.path):
             for name in self.exclude:
@@ -207,8 +209,8 @@ class PlainTextNoteBook(object):
                 relpath, ext = os.path.splitext(relpath)
                 unicode_relpath = unicode_or_bust(relpath)
                 if relpath is None:
-                    logger.error(
-                        'Could not decode filename: {}'.format(relpath))
+                    message = 'Could not decode filename: {}'
+                    logger.error(message.format(relpath))
                 else:
                     self.add_new(title=unicode_relpath, extension=ext)
 
@@ -228,12 +230,12 @@ class PlainTextNoteBook(object):
             title = title[len(os.sep):]
         title = title.strip()
         if not os.path.split(title)[1]:
-            raise InvalidNoteTitleError(
-                'Invalid note title: {}'.format(title))
+            message = 'Invalid note title: {}'
+            raise InvalidNoteTitleError(message.format(title))
         for note in self._notes:
             if note.title == title and note.extension == extension:
-                raise NoteAlreadyExistsError(
-                    u'Note already in NoteBook: {}'.format(note.title))
+                message = u'Note already in NoteBook: {}'
+                raise NoteAlreadyExistsError(message.format(note.title))
         note = PlainTextNote(title, self, extension)
         self._notes.append(note)
         return note

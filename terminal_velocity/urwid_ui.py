@@ -22,10 +22,10 @@ palette = [
 def system(cmd, loop):
     """Execute a system command in a subshell and return the exit status."""
     loop.screen.stop()
-    cmd = u'{0}'.format(cmd)
+    cmd = u'{}'.format(cmd)
     cmd = cmd.encode(sys.getfilesystemencoding())
     safe_cmd = shlex.split(cmd)
-    logger.debug('System command: {0}'.format(safe_cmd))
+    logger.debug('System command: {}'.format(safe_cmd))
     try:
         returncode = subprocess.check_call(safe_cmd)
     except Exception as e:
