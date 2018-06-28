@@ -14,12 +14,12 @@ def main():
     # Parse the command-line option for the config file.
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument(
-        "-c",
-        "--config",
-        dest="config",
-        action="store",
-        default="~/.tvrc",
-        help="the config file to use (default: %(default)s)")
+        '-c',
+        '--config',
+        dest='config',
+        action='store',
+        default='~/.tvrc',
+        help='the config file to use (default: %(default)s)')
     args, remaining_argv = parser.parse_known_args()
 
     # Parse the config file.
@@ -51,80 +51,80 @@ the default default will be used"""
         parents=[parser],
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument(
-        "-e",
-        "--editor",
-        dest="editor",
-        action="store",
-        default=defaults.get("editor", os.getenv("EDITOR", "vim")),
-        help="the text editor to use (default: %(default)s)")
+        '-e',
+        '--editor',
+        dest='editor',
+        action='store',
+        default=defaults.get('editor', os.getenv('EDITOR', 'pico')),
+        help='the text editor to use (default: %(default)s)')
 
     parser.add_argument(
-        "-x",
-        "--extension",
-        dest="extension",
-        action="store",
-        default=defaults.get("extension", "txt"),
-        help="the filename extension for new notes (default: %(default)s)")
+        '-x',
+        '--extension',
+        dest='extension',
+        action='store',
+        default=defaults.get('extension', 'txt'),
+        help='the filename extension for new notes (default: %(default)s)')
 
     parser.add_argument(
-        "--extensions",
-        dest="extensions",
-        action="store",
+        '--extensions',
+        dest='extensions',
+        action='store',
         default=defaults.get(
-            "extensions",
-            ".txt, .text, .md, .markdown, .mdown, .mdwn, .mkdn, .mkd, .rst"),
-        help="the filename extensions to recognize in the notes dir, a "
-        "comma-separated list (default: %(default)s)")
+            'extensions',
+            '.txt, .text, .md, .markdown, .mdown, .mdwn, .mkdn, .mkd, .rst'),
+        help='the filename extensions to recognize in the notes dir, a '
+        'comma-separated list (default: %(default)s)')
 
     parser.add_argument(
-        "--exclude",
-        dest="exclude",
-        action="store",
-        default=defaults.get("exclude", "src, backup, ignore, tmp, old"),
-        help="the file/directory names to skip while recursively searching "
-        "the notes dir for notes, a comma-separated list "
-        "(default: %(default)s)")
+        '--exclude',
+        dest='exclude',
+        action='store',
+        default=defaults.get('exclude', 'src, backup, ignore, tmp, old'),
+        help='the file/directory names to skip while recursively searching '
+        'the notes dir for notes, a comma-separated list '
+        '(default: %(default)s)')
 
     parser.add_argument(
-        "-d",
-        "--debug",
-        dest="debug",
-        action="store_true",
-        default=defaults.get("debug", False),
-        help="debug logging on or off (default: off)")
+        '-d',
+        '--debug',
+        dest='debug',
+        action='store_true',
+        default=defaults.get('debug', False),
+        help='debug logging on or off (default: off)')
 
     parser.add_argument(
-        "-l",
-        "--log-file",
-        dest="log_file",
-        action="store",
-        default=defaults.get("log_file", "~/.tvlog"),
-        help="the file to log to (default: %(default)s)")
+        '-l',
+        '--log-file',
+        dest='log_file',
+        action='store',
+        default=defaults.get('log_file', '~/.tvlog'),
+        help='the file to log to (default: %(default)s)')
 
     parser.add_argument(
-        "-p",
-        "--print-config",
-        dest="print_config",
-        action="store_true",
+        '-p',
+        '--print-config',
+        dest='print_config',
+        action='store_true',
         default=False,
-        help="print your configuration settings then exit")
+        help='print your configuration settings then exit')
 
     parser.add_argument(
-        "notes_dir",
-        action="store",
-        nargs="?",
-        default=defaults.get("notes_dir", "~/Notes"),
-        help="the notes directory to use (default: %(default)s)")
+        'notes_dir',
+        action='store',
+        nargs='?',
+        default=defaults.get('notes_dir', '~/Notes'),
+        help='the notes directory to use (default: %(default)s)')
 
     args = parser.parse_args()
 
     extensions = []
-    for extension in args.extensions.split(","):
+    for extension in args.extensions.split(','):
         extensions.append(extension.strip())
     args.extensions = extensions
 
     exclude = []
-    for name in args.exclude.split(","):
+    for name in args.exclude.split(','):
         exclude.append(name.strip())
     args.exclude = exclude
 
@@ -132,7 +132,7 @@ the default default will be used"""
         print args
         sys.exit()
 
-    logger = logging.getLogger("terminal_velocity")
+    logger = logging.getLogger('terminal_velocity')
     # Send all messages to handlers, let them decide.
     logger.setLevel(logging.DEBUG)
     fh = logging.handlers.RotatingFileHandler(
@@ -158,9 +158,9 @@ the default default will be used"""
             extensions=args.extensions,
             exclude=args.exclude)
     except KeyboardInterrupt:
-        # Silence KeyboardInterrupt tracebacks on ctrl-c.
-        sys.exit()
+        #todo: MainFrame.quit()
+        pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
