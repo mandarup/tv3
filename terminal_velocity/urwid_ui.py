@@ -328,7 +328,6 @@ class MainFrame(urwid.Frame):
 
 def launch(notes_dir, editor, extension, extensions, exclude=None):
     """Launch the user interface."""
-    urwid.set_encoding(sys.getfilesystemencoding())
     frame = MainFrame(
         notes_dir,
         editor,
@@ -336,6 +335,5 @@ def launch(notes_dir, editor, extension, extensions, exclude=None):
         extensions,
         exclude=exclude,
     )
-    loop = urwid.MainLoop(frame, palette)
-    frame.loop = loop
-    loop.run()
+    frame.loop = urwid.MainLoop(frame, palette)
+    frame.loop.run()
