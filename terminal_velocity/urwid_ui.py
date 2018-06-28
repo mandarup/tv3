@@ -22,8 +22,6 @@ palette = [
 def system(cmd, loop):
     """Execute a system command in a subshell and return the exit status."""
     loop.screen.stop()
-    cmd = u'{}'.format(cmd)
-    cmd = cmd.encode(sys.getfilesystemencoding())
     safe_cmd = shlex.split(cmd)
     logger.debug('System command: {}'.format(safe_cmd))
     try:
@@ -87,7 +85,7 @@ class AutocompleteWidget(urwid.Edit):
 
     def get_text(self):
         if not self.edit_text and not self.autocomplete_text:
-            placeholder_text = u'Find or Create'
+            placeholder_text = 'Find or Create'
             return (placeholder_text, [('placeholder', len(placeholder_text))])
         if not self.autocomplete_text:
             return super(AutocompleteWidget, self).get_text()
@@ -145,7 +143,7 @@ class NoteFilterListBox(urwid.ListBox):
 
     def render(self, size, focus=False):
         if len(self.list_walker) == 0:
-            placeholder = placeholder_text(u'No matching notes, press Enter '
+            placeholder = placeholder_text('No matching notes, press Enter '
                                            'to create a new note')
             return placeholder.render(size)
         return super(NoteFilterListBox, self).render(size, self.fake_focus)
@@ -186,6 +184,7 @@ class NoteFilterListBox(urwid.ListBox):
 
 class MainFrame(urwid.Frame):
     """The topmost urwid widget."""
+
     def __init__(self, notes_dir, editor, extension, extensions, exclude=None):
         self.editor = editor
         self.notebook = notebook.PlainTextNoteBook(
@@ -222,6 +221,7 @@ class MainFrame(urwid.Frame):
             self.search_box.autocomplete_text = None
             self.list_box.fake_focus = False
         self._selected_note = note
+
     selected_note = property(get_selected_note, set_selected_note)
 
     def quit(self):
@@ -302,7 +302,7 @@ class MainFrame(urwid.Frame):
             return
         if len(self.notebook) == 0:
             self.body = placeholder_text(
-                u'You have no notes yet, to create '
+                'You have no notes yet, to create '
                 'a note type a note title then press Enter')
         else:
             self.body = urwid.Padding(self.list_box, left=1, right=1)

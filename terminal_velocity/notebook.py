@@ -98,12 +98,12 @@ class PlainTextNote(object):
         self._abspath = os.path.join(self._notebook.path, self._filename)
         directory = os.path.split(self.abspath)[0]
         if not os.path.isdir(directory):
-            message = u'\'{} doesn\'t exist, creating it'
+            message = '\'{} doesn\'t exist, creating it'
             logger.debug(message.format(directory))
             try:
                 os.makedirs(directory)
             except os.error as e:
-                message = u'{} could not be created: {}'
+                message = '{} could not be created: {}'
                 raise NewNoteError(message.format(directory, e))
         open(self.abspath, 'a')
 
@@ -123,9 +123,9 @@ class PlainTextNote(object):
     def contents(self):
         contents = unicode_or_bust(open(self.abspath, 'r').read())
         if contents is None:
-            message = u'Could not decode file contents: {}'
+            message = 'Could not decode file contents: {}'
             logger.error(message.format(self.abspath))
-            return u''
+            return ''
         else:
             return contents
 
@@ -185,12 +185,12 @@ class PlainTextNoteBook(object):
                 extension = '.' + extension
             self.extensions.append(extension)
         if not os.path.isdir(self.path):
-            message = u'{} doesn\'t exist, creating it'
+            message = '{} doesn\'t exist, creating it'
             logger.debug(message.format(self.path))
             try:
                 os.makedirs(self.path)
             except os.error as e:
-                message = u'{} could not be created: {}'
+                message = '{} could not be created: {}'
                 raise NewNoteBookError(message.format(self.path, e))
         self._notes = []
         for root, dirs, files in os.walk(self.path):
@@ -234,7 +234,7 @@ class PlainTextNoteBook(object):
             raise InvalidNoteTitleError(message.format(title))
         for note in self._notes:
             if note.title == title and note.extension == extension:
-                message = u'Note already in NoteBook: {}'
+                message = 'Note already in NoteBook: {}'
                 raise NoteAlreadyExistsError(message.format(note.title))
         note = PlainTextNote(title, self, extension)
         self._notes.append(note)
