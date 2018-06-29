@@ -26,20 +26,20 @@ def main():
     config.read(config_file)
     defaults = dict(config.items('DEFAULT'))
     description = __doc__
-    epilog = """
-the config file can be used to override the defaults for the optional
-arguments, example config file contents:
-
-    [DEFAULT]
-    editor = vim
-    # The filename extension to use for new files.
-    extension = .txt
-    # The filename extensions to recognize in the notes dir.
-    extensions = .txt, .text, .md, .markdown, .mdown, .mdwn, .mkdn, .mkd, .rst
-    notes_dir = ~/Notes
-
-if there is no config file (or an argument is missing from the config file)
-the default default will be used"""
+    epilog = (
+        'the config file can be used to override the defaults for the\n'
+        'optional arguments, example config file contents:\n'
+        '\n'
+        '    [DEFAULT]\n'
+        '    editor = pico\n'
+        '    # The filename extension to use for new files.\n'
+        '    extension = .txt\n'
+        '    # The filename extensions to recognize in the notes dir.\n'
+        '    extensions = .txt, .md, .markdown, .rst\n'
+        '    notes_dir = ~/Notes\n'
+        ''
+        'if there is no config file (or an argument is missing from the)\n'
+        'config file the default default will be used\n')
     parser = argparse.ArgumentParser(
         description=description,
         epilog=epilog,
@@ -65,10 +65,7 @@ the default default will be used"""
     parser.add_argument(
         '--extensions',
         action='store',
-        default=defaults.get(
-            'extensions',
-            '.txt, .text, .md, .markdown, .mdown, .mdwn, .mkdn, .mkd, .rst',
-        ),
+        default=defaults.get('extensions', '.txt, .md, .markdown, .rst'),
         dest='extensions',
         help=('the filename extensions to recognize in the notes dir, a '
               'comma-separated list (default: %(default)s)'),
