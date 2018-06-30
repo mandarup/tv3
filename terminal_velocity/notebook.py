@@ -131,12 +131,14 @@ def brute_force_search(notebook, query):
 class PlainTextNoteBook(object):
     """A NoteBook that stores its notes as a directory of plain text files."""
 
-    def __init__(self,
-                 path,
-                 extension,
-                 extensions,
-                 search_function=brute_force_search,
-                 exclude=None):
+    def __init__(
+            self,
+            path,
+            extension,
+            extensions,
+            search_function=brute_force_search,
+            exclude=None,
+    ):
         """Make a new PlainTextNoteBook for the given path."""
         self._path = os.path.abspath(os.path.expanduser(path))
         if extension and not extension.startswith('.'):

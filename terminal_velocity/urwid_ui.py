@@ -123,7 +123,7 @@ class NoteFilterListBox(urwid.ListBox):
         """Initialise a new NoteFilterListBox."""
         self._fake_focus = False
         self.list_walker = urwid.SimpleFocusListWalker([])
-        self.widgets = {}  # NoteWidget cache.
+        self.widgets = {}
         super(NoteFilterListBox, self).__init__(self.list_walker)
         self.on_changed = on_changed
 
@@ -185,10 +185,21 @@ class NoteFilterListBox(urwid.ListBox):
 class MainFrame(urwid.Frame):
     """The topmost urwid widget."""
 
-    def __init__(self, notes_dir, editor, extension, extensions, exclude=None):
+    def __init__(
+            self,
+            notes_dir,
+            editor,
+            extension,
+            extensions,
+            exclude=None,
+    ):
         self.editor = editor
         self.notebook = notebook.PlainTextNoteBook(
-            notes_dir, extension, extensions, exclude=exclude)
+            notes_dir,
+            extension,
+            extensions,
+            exclude=exclude,
+        )
         self.suppress_filter = False
         self.suppress_focus = False
         self._selected_note = None
