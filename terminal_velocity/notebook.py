@@ -58,7 +58,7 @@ class PlainTextNote(object):
 
     def __init__(self, title, notebook, extension):
         """Initialise a new PlainTextNote."""
-        self._title = title
+        self._title = title.decode('utf-8')
         self._notebook = notebook
         self._extension = extension
         self._filename = self.title + self._extension
@@ -88,13 +88,13 @@ class PlainTextNote(object):
 
     @property
     def contents(self):
-        contents = open(self.abspath, 'r').read()
+        contents = open(self.abspath, 'rb').read()
         if contents is None:
             message = 'Could not decode file contents: {}'
             logger.error(message.format(self.abspath))
             return ''
         else:
-            return contents
+            return contents.decode('utf-8')
 
     @property
     def mtime(self):
