@@ -1,13 +1,17 @@
 #!/usr/bin/env python2
 """A fast note-taking app for the UNIX terminal"""
 
-import ConfigParser
 import argparse
 import logging
 import logging.handlers
 import os
 import sys
 import terminal_velocity.urwid_ui as urwid_ui
+
+try:
+    import ConfigParser  # legacy python
+except ModuleNotFoundError:
+    import configparser as ConfigParser
 
 
 def main():
@@ -120,7 +124,7 @@ def main():
         exclude.append(name.strip())
     args.exclude = exclude
     if args.print_config:
-        print args
+        print(args)
         sys.exit()
     logger = logging.getLogger('terminal_velocity')
     logger.setLevel(logging.DEBUG)
