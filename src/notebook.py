@@ -58,7 +58,7 @@ class PlainTextNote(object):
 
     def __init__(self, title, notebook, extension):
         """Initialise a new PlainTextNote."""
-        self._title = title.decode('utf-8')
+        self._title = title
         self._notebook = notebook
         self._extension = extension
         self._filename = self.title + self._extension

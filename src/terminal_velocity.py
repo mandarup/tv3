@@ -2,16 +2,12 @@
 """A fast note-taking app for the UNIX terminal"""
 
 import argparse
+import configparser
 import logging
 import logging.handlers
 import os
 import sys
 import urwid_ui
-
-try:
-    import ConfigParser  # legacy python
-except ModuleNotFoundError:
-    import configparser as ConfigParser
 
 
 def main():
@@ -26,7 +22,7 @@ def main():
     )
     args, remaining_argv = parser.parse_known_args()
     config_file = os.path.abspath(os.path.expanduser(args.config))
-    config = ConfigParser.SafeConfigParser()
+    config = configparser.SafeConfigParser()
     config.read(config_file)
     defaults = dict(config.items('DEFAULT'))
     description = __doc__
