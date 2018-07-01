@@ -6,7 +6,7 @@ import logging
 import logging.handlers
 import os
 import sys
-import terminal_velocity.urwid_ui as urwid_ui
+import urwid_ui
 
 try:
     import ConfigParser  # legacy python
