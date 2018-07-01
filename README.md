@@ -9,5 +9,5 @@ delegates the note-taking itself to your `$EDITOR`.
 The interface concept is taken from [Notational
 Velocity](http://notational.net/).
 
-This is an active fork and **Python3** port of
+This is an active fork and **Python 3** port of
 [terminal-velocity-notes/terminal_velocity](https://github.com/terminal-velocity-notes/terminal_velocity).
