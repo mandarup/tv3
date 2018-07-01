@@ -1,23 +1,17 @@
-from setuptools import setup
+#!/usr/bin/env python3
 
-setup(
-    name='terminal_velocity',
-    version='0.1.10',
-    author='Sean Hammond, Vincent Perricone, Aramís Concepción Durán',
-    packages=['terminal_velocity'],
-    scripts=['bin/terminal_velocity'],
-    url='github.com/aramiscd/terminal_velocity',
+import setuptools
+
+setuptools.setup(
+    author='Aramís Concepción Durán',
+    description='A text-based note-taking application',
+    entry_points='[console_scripts]\ntv3=terminal_velocity:main\n',
+    install_requires=['urwid==1.1.1', 'chardet==2.1.1'],
     license='GNU General Public License, Version 3',
-    description='A fast note-taking app for the UNIX terminal',
     long_description=open('README.md').read(),
-    install_requires=[
-        'urwid==1.1.1',
-        'chardet==2.1.1',
-        ],
-    classifiers=[
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2 :: Only',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        ],
+    name='tv3',
+    package_dir={'': 'src'},
+    py_modules=['terminal_velocity'],
+    url='github.com/aramiscd/terminal_velocity',
+    version='0.1',
 )
