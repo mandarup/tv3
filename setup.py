@@ -12,6 +12,6 @@ setuptools.setup(
     name='tv3',
     package_dir={'': 'src'},
     py_modules=['terminal_velocity'],
-    url='github.com/aramiscd/terminal_velocity',
+    url='github.com/aramiscd/tv3',
     version='0.1',
 )
