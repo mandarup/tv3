@@ -11,3 +11,9 @@ Velocity](http://notational.net/).
 
 This is an active fork and **Python 3** port of
 [terminal-velocity-notes/terminal_velocity](https://github.com/terminal-velocity-notes/terminal_velocity).
+
+## Installation
+
+    git clone https://github.com/aramiscd/tv3
+    cd tv3
+    sudo -H pip3 install .
