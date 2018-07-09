@@ -22,11 +22,13 @@ your systemwide Python installation clean.  If you want to install
 systemwide just drop the `--user` flag and prepend the last line with
 `sudo -H`.
 
-    git clone https://github.com/aramiscd/tv3
-    cd tv3
-    pip3 install --user .
-    cd ..
-    rm -rf tv3
+```bash
+git clone https://github.com/aramiscd/tv3
+cd tv3
+pip3 install --user .
+cd ..
+rm -rf tv3
+```
 
 ### Installation in a virtual environment
 
@@ -41,14 +43,16 @@ then simlink it to `~/.local/bin/` (or any other directory in your
 `$PATH`).  If you are a pythonista you probably already know how to do
 this, otherwise just follow the instructions bellow.
 
-    bash
-    sudo -H pip3 install virtualenv
-    git clone https://github.com/aramiscd/tv3 ~/.tv3
-    cd ~/.tv3
-    virtualenv -p python3 env
-    env/bin/activate
-    pip3 install .
-    deactivate
-    mkdir -p ~/.local/bin/
-    ln -s ~/.tv3/env/bin/tv3 ~/.local/bin/
-    exit
+```bash
+bash
+sudo -h pip3 install virtualenv
+git clone https://github.com/aramiscd/tv3 ~/.tv3
+cd ~/.tv3
+virtualenv -p python3 env
+env/bin/activate
+pip3 install .
+deactivate
+mkdir -p ~/.local/bin/
+ln -s ~/.tv3/env/bin/tv3 ~/.local/bin/
+exit
+```
