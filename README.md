@@ -18,8 +18,8 @@ and a port from Legacy Python to **Python 3**.
 ### User site installation
 
 This installs to `~/.local/`.  It doesn't need root privileges and keeps
-your systemwide Python installation clean.  If you want to install
-systemwide just drop the `--user` flag and prepend the last line with
+your system-wide Python installation clean.  If you want to install
+system-wide just drop the `--user` flag and prepend the last line with
 `sudo -H`.
 
 ```bash
@@ -33,13 +33,13 @@ rm -rf tv3
 ### Installation in a virtual environment
 
 The code currently depends on an older version of Urwid (1.1.1) and
-isn't (yet) fully compatibile with more recent versions of Urwid .  So,
+isn't (yet) fully compatible with more recent versions of Urwid .  So,
 if you have other stuff depending on a more recent Urwid in the same
 Python environment, you will get a dependency conflict, because Python
 doesn't support multiple versions of a Package in the same environment.
 
 The solution is to install tv3 in its own virtual Python environment and
-then simlink it to `~/.local/bin/` (or any other directory in your
+then symlink it to `~/.local/bin/` (or any other directory in your
 `$PATH`).  If you are a pythonista you probably already know how to do
 this, otherwise just follow the instructions bellow.
 
