@@ -45,7 +45,7 @@ this, otherwise just follow the instructions bellow.
 
 ```bash
 bash
-sudo -h pip3 install virtualenv
+sudo -H pip3 install virtualenv
 git clone https://github.com/aramiscd/tv3 ~/.tv3
 cd ~/.tv3
 virtualenv -p python3 env
