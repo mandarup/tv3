@@ -93,7 +93,7 @@ class PlainTextNote(object):
             logger.error(message.format(self.abspath))
             return ''
         else:
-            return contents.decode('utf-8')
+            return contents.decode('utf-8', errors='ignore')
 
     @property
     def mtime(self):
