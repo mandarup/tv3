@@ -19,8 +19,7 @@ and a port from Legacy Python to **Python 3**.
 
 This installs to `~/.local/`.  It doesn't need root privileges and keeps
 your system-wide Python installation clean.  If you want to install
-system-wide just drop the `--user` flag and prepend the last line with
-`sudo -H`.
+system-wide just drop the `--user` flag and prepend `sudo -H` to `pip3.
 
 ```bash
 git clone https://github.com/aramiscd/tv3
