@@ -1,6 +1,6 @@
 # Terminal Velocity 3
 
-Terminal Velocity 3 is a TUI application for managing-plain text notes.
+Terminal Velocity 3 is a TUI application for managing plain-text notes.
 It combines finding and creating notes in a single minimal interface and
 delegates the note-taking itself to your `$EDITOR`.
 
