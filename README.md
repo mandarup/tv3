@@ -19,7 +19,7 @@ and a port from Legacy Python to **Python 3**.
 
 This installs to `~/.local/`.  It doesn't need root privileges and keeps
 your system-wide Python installation clean.  If you want to install
-system-wide just drop the `--user` flag and prepend `sudo -H` to `pip3.
+system-wide, drop the `--user` flag and prepend `sudo -H` to `pip3`.
 
 ```bash
 git clone https://github.com/aramiscd/tv3
@@ -40,7 +40,7 @@ a package in the same environment.
 The solution is to install TV3 in its own virtual Python environment and
 symlink it to `~/.local/bin/` (or any other directory in your `$PATH`).
 If you are a pythonista and familiar with the command line you probably
-already know how to do this.  Otherwise just follow these instructions.
+know how to do this.  Otherwise just follow these instructions.
 
 ```bash
 bash
