@@ -1,13 +1,12 @@
 """A console user interface for Terminal Velocity."""
 
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("tv3")
 
 import notebook
 import pipes
 import shlex
 import subprocess
-import sys
 import urwid
 
 palette = [
@@ -21,7 +20,7 @@ palette = [
 
 def system(cmd, loop):
     """Execute a system command in a subshell and return the exit status."""
-    loop.screen.stop()
+    # loop.screen.stop()
     safe_cmd = shlex.split(cmd)
     logger.debug('System command: {}'.format(safe_cmd))
     try:
@@ -29,7 +28,7 @@ def system(cmd, loop):
     except Exception as e:
         logger.exception(e)
         raise e
-    loop.screen.start()
+    # loop.screen.start()
     return returncode
 
 

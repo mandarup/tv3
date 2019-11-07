@@ -1,10 +1,9 @@
 """Persistent note storage and search."""
 
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("tv3")
 
 import os
-import sys
 
 
 class Error(Exception):
