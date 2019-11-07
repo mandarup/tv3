@@ -20,9 +20,9 @@ def main():
         dest='config',
         help='the config file to use (default: %(default)s)',
     )
-    args, remaining_argv = parser.parse_known_args()
+    (args, _) = parser.parse_known_args()
     config_file = os.path.abspath(os.path.expanduser(args.config))
-    config = configparser.SafeConfigParser()
+    config = configparser.ConfigParser()
     config.read(config_file)
     defaults = dict(config.items('DEFAULT'))
     description = __doc__
@@ -122,7 +122,7 @@ def main():
     if args.print_config:
         print(args)
         sys.exit()
-    logger = logging.getLogger('terminal_velocity')
+    logger = logging.getLogger("tv3")
     logger.setLevel(logging.DEBUG)
     fh = logging.handlers.RotatingFileHandler(
         os.path.abspath(os.path.expanduser(args.log_file)),
