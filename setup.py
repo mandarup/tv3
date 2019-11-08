@@ -11,7 +11,7 @@ setuptools.setup(
     long_description=open('README.md').read(),
     name='tv3',
     package_dir={'': 'src'},
-    py_modules=['notebook', 'terminal_velocity', 'urwid_ui', 'watchdog'],
+    py_modules=['notebook', 'terminal_velocity', 'urwid_ui'],
     url='github.com/aramiscd/tv3',
     version='0.1',
 )
