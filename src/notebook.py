@@ -2,6 +2,8 @@
 
 import logging
 logger = logging.getLogger("tv3")
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 import os
 
@@ -165,20 +167,12 @@ class PlainTextNoteBook(object):
                 if name in dirs:
                     dirs.remove(name)
             for filename in files:
-                if filename in self.exclude:
-                    continue
-                if filename.startswith('.') or filename.endswith('~'):
-                    continue
-                if os.path.splitext(filename)[1] not in self.extensions:
-                    continue
-                abspath = os.path.join(root, filename)
-                relpath = os.path.relpath(abspath, self.path)
-                relpath, ext = os.path.splitext(relpath)
-                if relpath is None:
-                    message = 'Could not decode filename: {}'
-                    logger.error(message.format(relpath))
-                else:
-                    self.add_new(title=relpath, extension=ext)
+                    self.add_new(filename, root=root)
+        # Activate watchdog
+        self._observer = Observer()
+        self._fileEventHandler = FileEventHandler(self)
+        self._observer.schedule(self._fileEventHandler, self.path, recursive=True)
+        self._observer.start()
 
     @property
     def path(self):
@@ -188,7 +182,24 @@ class PlainTextNoteBook(object):
         """Return a sequence of Notes that match the given query."""
         return self.search_function(self, query)
 
-    def add_new(self, title, extension=None):
+    def add_new(self, filename, root=None):
+        if filename in self.exclude:
+            return
+        if filename.startswith('.') or filename.endswith('~'):
+            return
+        if os.path.splitext(filename)[1] not in self.extensions:
+            return
+        if root is None:
+            root = self._path
+        logger.debug("Creating filename: {}".format(filename))
+        abspath = os.path.join(root, filename)
+        title = os.path.relpath(abspath, self.path)
+        title, extension = os.path.splitext(title)
+        if title is None:
+            message = 'Could not decode filename: {}'
+            logger.error(message.format(title))
+            return
+
         """Create a new Note and add it to this NoteBook."""
         if extension is None:
             extension = self.extension
@@ -205,6 +216,26 @@ class PlainTextNoteBook(object):
         note = PlainTextNote(title, self, extension)
         self._notes.append(note)
         return note
+
+    def remove(self, filename, root=None):
+        logger.debug("Removing {}".format(filename))
+        if root is None:
+            root = self._path
+        abspath = os.path.join(root, filename)
+        title = os.path.relpath(abspath, self.path)
+        title, _ = os.path.splitext(title)
+        if title is None:
+            message = 'Could not decode filename: {}'
+            logger.error(message.format(title))
+            return
+        for i in range(len(self._notes)):
+            n = self._notes[i]
+            if n.title == title:
+                logger.debug("Found note with index {} and title {}".format(i, title))
+                logger.debug("Current length is {}".format(len(self._notes)))
+                self._notes = self._notes[:i] + self._notes[i+1:]
+                logger.debug("New length is {}".format(len(self._notes)))
+                return
 
     def __len__(self):
         return len(self._notes)
@@ -223,3 +254,17 @@ class PlainTextNoteBook(object):
 
     def __contains__(self, note):
         return (note in self._notes)
+
+class FileEventHandler(FileSystemEventHandler):
+    def __init__(self, notebook):
+        self._notebook = notebook
+    def on_created(self, e):
+        if not e.is_directory:
+            logger.debug("Detected new file {}".format(e.src_path))
+            self._notebook.add_new(e.src_path)
+        return super().on_created(e)
+    def on_deleted(self, e):
+        if not e.is_directory:
+            logger.debug("Detected deleted file {}".format(e.src_path))
+            self._notebook.remove(e.src_path)
+        return super().on_deleted(e)

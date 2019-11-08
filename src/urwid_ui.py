@@ -29,6 +29,7 @@ def system(cmd, loop):
         logger.exception(e)
         raise e
     # loop.screen.start()
+    loop.screen.clear()
     return returncode
 
 
@@ -242,7 +243,7 @@ class MainFrame(urwid.Frame):
         maxcol, maxrow = size
         self.suppress_filter = False
         self.suppress_focus = False
-        if key in ['esc', 'ctrl d']:
+        if key in ['esc', 'ctrl d', 'ctrl u']:
             if self.selected_note:
                 self.selected_note = None
                 return None
@@ -260,7 +261,7 @@ class MainFrame(urwid.Frame):
             else:
                 if self.search_box.edit_text:
                     try:
-                        note = self.notebook.add_new(self.search_box.edit_text)
+                        note = self.notebook.add_new(self.search_box.edit_text +  self.notebook.extension)
                         note = pipes.quote(note.abspath)
                         system(self.editor + ' ' + note, self.loop)
                     except notebook.NoteAlreadyExistsError:
