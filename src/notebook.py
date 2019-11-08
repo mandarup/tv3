@@ -189,7 +189,7 @@ class PlainTextNoteBook(object):
             return
         if os.path.splitext(filename)[1] not in self.extensions:
             return
-        if root == None: 
+        if root is None:
             root = self._path
         logger.debug("Creating filename: {}".format(filename))
         abspath = os.path.join(root, filename)
