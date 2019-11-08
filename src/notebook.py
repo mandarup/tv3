@@ -219,11 +219,11 @@ class PlainTextNoteBook(object):
 
     def remove(self, filename, root=None):
         logger.debug("Removing {}".format(filename))
-        if root == None: 
+        if root is None:
             root = self._path
         abspath = os.path.join(root, filename)
         title = os.path.relpath(abspath, self.path)
-        title, extension = os.path.splitext(title)
+        title, _ = os.path.splitext(title)
         if title is None:
             message = 'Could not decode filename: {}'
             logger.error(message.format(title))
@@ -255,11 +255,11 @@ class PlainTextNoteBook(object):
     def __contains__(self, note):
         return (note in self._notes)
 
-class FileEventHandler(FileSystemEventHandler): 
+class FileEventHandler(FileSystemEventHandler):
     def __init__(self, notebook):
         self._notebook = notebook
     def on_created(self, e):
-        if not e.is_directory: 
+        if not e.is_directory:
             logger.debug("Detected new file {}".format(e.src_path))
             self._notebook.add_new(e.src_path)
         return super().on_created(e)
