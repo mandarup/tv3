@@ -74,6 +74,11 @@ class PlainTextNote(object):
                 raise NewNoteError(message.format(directory, e))
         open(self.abspath, 'a')
 
+    def __del__(self):
+        """Close the file descriptor when object destroyed"""
+        self.abspath.close()
+
+
     @property
     def title(self):
         return self._title
@@ -88,7 +93,9 @@ class PlainTextNote(object):
 
     @property
     def contents(self):
-        contents = open(self.abspath, 'rb').read()
+        fp = open(self.abspath, 'rb')
+        contents = fp.read()
+        fp.close()
         if contents is None:
             message = 'Could not decode file contents: {}'
             logger.error(message.format(self.abspath))

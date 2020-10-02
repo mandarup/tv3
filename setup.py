@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import setuptools
+
+f_readme = open('README.md')
+readme_text = f_readme.read()
+f_readme.close()
 
 setuptools.setup(
     author='Aramís Concepción Durán',
@@ -8,7 +13,7 @@ setuptools.setup(
     entry_points='[console_scripts]\ntv3=terminal_velocity:main\n',
     install_requires=['urwid==1.1.1'],
     license='GNU General Public License, Version 3',
-    long_description=open('README.md').read(),
+    long_description=readme_text,
     name='tv3',
     package_dir={'': 'src'},
     py_modules=['notebook', 'terminal_velocity', 'urwid_ui'],
