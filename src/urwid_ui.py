@@ -270,7 +270,8 @@ class MainFrame(urwid.Frame):
                         note = pipes.quote(note)
                         system(self.editor + ' ' + note, self.loop)
                     except notebook.InvalidNoteTitleError:
-                        pass
+                        # If the filename wouldn't be valid, don't attempt to process it
+                        pass # Surpress errors arising from an invalid title
             self.suppress_focus = True
             self.filter(self.search_box.edit_text)
             return None

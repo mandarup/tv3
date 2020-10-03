@@ -144,8 +144,6 @@ def main():
         extension=args.extension,
         extensions=args.extensions,
         exclude=args.exclude)
-    #except KeyboardInterrupt:
-    #    pass
 
 
 if __name__ == '__main__':
