@@ -137,15 +137,15 @@ def main():
     sh.setLevel(logging.CRITICAL)
     logger.addHandler(sh)
     logger.debug(args)
-    try:
-        urwid_ui.launch(
-            notes_dir=args.notes_dir,
-            editor=args.editor,
-            extension=args.extension,
-            extensions=args.extensions,
-            exclude=args.exclude)
-    except KeyboardInterrupt:
-        pass
+    #try:
+    urwid_ui.launch(
+        notes_dir=args.notes_dir,
+        editor=args.editor,
+        extension=args.extension,
+        extensions=args.extensions,
+        exclude=args.exclude)
+    #except KeyboardInterrupt:
+    #    pass
 
 
 if __name__ == '__main__':

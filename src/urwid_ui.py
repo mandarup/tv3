@@ -306,6 +306,7 @@ class MainFrame(urwid.Frame):
             return self.search_box.keypress((maxcol, ), key)
         else:
             return self.search_box.keypress((maxcol, ), key)
+        return None # can't reach this line, but suppresses linter error
 
     def filter(self, query):
         """Do the synchronised list box filter and search box autocomplete."""

@@ -72,12 +72,6 @@ class PlainTextNote(object):
             except os.error as e:
                 message = '{} could not be created: {}'
                 raise NewNoteError(message.format(directory, e))
-        #open(self.abspath, 'a')
-
-    def __del__(self):
-        """Close the file descriptor when object destroyed"""
-        self.abspath.close()
-
 
     @property
     def title(self):
@@ -190,21 +184,23 @@ class PlainTextNoteBook(object):
 
     def add_new(self, filename, root=None):
         if filename in self.exclude:
-            return
+            return None
         if filename.startswith('.') or filename.endswith('~'):
-            return
+            return None
         if os.path.splitext(filename)[1] not in self.extensions:
-            return
+            return None
         if root is None:
             root = self._path
         logger.debug("Creating filename: {}".format(filename))
         abspath = os.path.join(root, filename)
+        with open(abspath, 'a') as fp:
+            fp.write("")
         title = os.path.relpath(abspath, self.path)
         title, extension = os.path.splitext(title)
         if title is None:
             message = 'Could not decode filename: {}'
             logger.error(message.format(title))
-            return
+            return None
 
         """Create a new Note and add it to this NoteBook."""
         if extension is None:
@@ -267,7 +263,10 @@ class FileEventHandler(FileSystemEventHandler):
     def on_created(self, e):
         if not e.is_directory:
             logger.debug("Detected new file {}".format(e.src_path))
-            self._notebook.add_new(e.src_path)
+            try:
+                self._notebook.add_new(e.src_path)
+            except NoteAlreadyExistsError:
+                return super().on_created(e)
         return super().on_created(e)
     def on_deleted(self, e):
         if not e.is_directory:
