@@ -3,9 +3,8 @@
 
 import setuptools
 
-f_readme = open('README.md')
-readme_text = f_readme.read()
-f_readme.close()
+with open('README.md') as f_readme:
+    readme_text = f_readme.read()
 
 setuptools.setup(
     author='Aramís Concepción Durán',
