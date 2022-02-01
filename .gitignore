@@ -2,3 +2,5 @@
 *.pyc
 /env/
 /py3venv/
+build/
+tmp/
