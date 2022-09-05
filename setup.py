@@ -10,7 +10,10 @@ setuptools.setup(
     author='Aramís Concepción Durán',
     description='A text-based note-taking application',
     entry_points='[console_scripts]\ntv3=terminal_velocity:main\n',
-    install_requires=['urwid==2.1.2'],
+    install_requires=[
+        'urwid==2.1.2',
+        'watchdog'
+    ],
     license='GNU General Public License, Version 3',
     long_description=readme_text,
     name='tv3',
